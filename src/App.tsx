@@ -164,7 +164,7 @@ export default function App() {
 
         <div className="mt-10 max-w-md mx-auto flex justify-center gap-4">
           <a
-            href="https://github.com"
+            href="https://github.com/Ashishmehta786"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -176,7 +176,7 @@ export default function App() {
             />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/ashish-mehta-83a2bb279/"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -188,7 +188,7 @@ export default function App() {
             />
           </a>
           <a
-            href="https://twitter.com"
+            href="https://x.com/AshishM95556974"
             target="_blank"
             rel="noopener noreferrer"
           >

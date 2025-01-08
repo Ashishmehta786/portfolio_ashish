@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import gh from "./public/github.svg";
 import x from "./public/x.svg";
 import linkedin from "./public/linkedin.svg";
+import { useNavigate } from "react-router-dom";
 import {
   AudioLines,
   FolderOpenDot,
@@ -12,6 +13,9 @@ import {
 } from "lucide-react";
 
 const ProjectBlock = ({ isloading }: { isloading: boolean }) => {
+  projects.map((project, index) => {
+    console.log(project.projectLink);
+  });
   return (
     <ul className="pl-5 space-y-2 flex flex-col justify-center">
       {projects.map((project, index) => {
@@ -26,9 +30,12 @@ const ProjectBlock = ({ isloading }: { isloading: boolean }) => {
             <span className="absolute -left-5 scale-[1.4] text-neutral-950 dark:text-neutral-300">
               •
             </span>
-            <a href={project.projectLink} target="_blank"></a>
-            <span>{project.projectName}</span>
-            <ArrowUpRight className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:cursor-pointer transition-all duration-300 ease-in-out" />
+            <a href={project.projectLink} className="flex gap-2" target="_blank">
+              {" "}
+              <span>{project.projectName}</span>
+              <ArrowUpRight className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:cursor-pointer transition-all duration-300 ease-in-out" />
+            </a>
+
             {!project.hosted && (
               <div>
                 <img src={gh} className="w-5 h-5 ml-5 dark:invert" />

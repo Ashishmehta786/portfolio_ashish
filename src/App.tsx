@@ -1,6 +1,84 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
+import gh from "./public/github.svg";
+import x from "./public/x.svg";
+import linkedin from "./public/linkedin.svg";
+import {
+  AudioLines,
+  FolderOpenDot,
+  LucideProps,
+  ArrowUpRight,
+} from "lucide-react";
+
+const ProjectBlock = ({ isloading }: { isloading: boolean }) => {
+  return (
+    <ul className="pl-5 space-y-2 flex flex-col justify-center">
+      {projects.map((project, index) => {
+        return (
+          <li
+            className={`relative group flex gap-2 items-center dark:text-neutral-300 text-neutral-700 transition-all duration-300 ease-in-out cursor-pointer ${
+              isloading
+                ? " blur pointer-events-none backdrop-blur-sm"
+                : "blur-none backdrop-blur-none opacity-100"
+            }`}
+          >
+            <span className="absolute -left-5 scale-[1.4] text-neutral-950 dark:text-neutral-300">
+              •
+            </span>
+            <a href={project.projectLink} target="_blank"></a>
+            <span>{project.projectName}</span>
+            <ArrowUpRight className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:cursor-pointer transition-all duration-300 ease-in-out" />
+            {!project.hosted && (
+              <div>
+                <img src={gh} className="w-5 h-5 ml-5 dark:invert" />
+              </div>
+            )}
+            {project.hosted && (
+              <>
+                <div className="w-2 ml-5 h-2 bg-green-500 rounded-full"></div>
+                {project.users > 0 && (
+                  <span className="text-neutral-500 dark:text-neutral-400">
+                    {project.users} users
+                  </span>
+                )}
+              </>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
+
+const Itemblock = ({
+  isloading,
+  heading,
+  Headingicon,
+  array,
+}: {
+  text: string;
+  isloading: boolean;
+  heading: string;
+  Headingicon: React.ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
+  >;
+  array: string[];
+}) => (
+  <div className=" flex mb-6 flex-col text-neutral-800 dark:text-neutral-100 ">
+    <h2 className="text-2xl font-bold mb-4 flex gap-2   items-center">
+      <span className="gap-2">
+        <Headingicon />
+      </span>
+      {heading}
+    </h2>
+    <ul className="list-disc  pl-5 space-y-2  flex flex-col    justify-center">
+      {array.map((item, index) => (
+        <ListItem key={index} text={item} isLoading={isloading} />
+      ))}
+    </ul>
+  </div>
+);
 
 const ListItem = ({
   text,
@@ -17,36 +95,43 @@ const ListItem = ({
           : "blur-none backdrop-blur-none opacity-100"
       }`}
     >
-      <span className="text-gray-700">{text}</span>
+      <span className=" dark:text-neutral-300 text-neutral-700">{text}</span>
     </li>
   );
 };
 
-const listItems = [
-  "Final-year B.Tech student at IKGPTU, specializing in Computer Science (GPA: 8.36/10).",
-  "Passionate about full-stack development and machine learning.",
-  "Proficient in C, C++, Python, JavaScript, and modern web technologies.",
-  "Hands-on experience in building real-time chat apps and data visualization systems.",
-  "Contributor to open-source projects with 167 GitHub commits in one year.",
-  "Enthusiast in finance, stock trading, and algorithmic trading strategies.",
+const aboutMe = [
+  "My name is Ashish mehta studying currently in 3rd year of engineering",
+  "CS undergrad proficient in TypeScript, React,Next.js, Node.js and cloud platforms",
+  "Built real-time applications using MongoDB, Firebase and modern frameworks",
+  "Strong foundation in Python, C++ with machine learning experience",
+  "Open-source enthusiast with 160+ commits and full-stack projects",
 ];
-
-const skillsArray = [
-  "Next.js",
-  "TypeScript",
-  "JavaScript",
-  "React.js",
-  "Node.js",
-  "Express.js",
-  "MongoDB",
-  "PostgreSQL",
-  "Supabase",
-  "Firebase",
-  "ShadCN/UI",
-  "C++",
-  "C",
-  "Python",
-  "TensorFlow",
+const projects = [
+  {
+    projectName: "Rag Project",
+    projectLink: "https://rag-project-iota.vercel.app/",
+    hosted: true,
+    users: 5,
+  },
+  {
+    projectName: "GraphFlowml",
+    projectLink: "https://graphflow-ml.vercel.app/",
+    hosted: true,
+    users: 2,
+  },
+  {
+    projectName: "nocodeapi",
+    projectLink: "https://nocodeapi.vercel.app/",
+    hosted: true,
+    users: 2,
+  },
+  {
+    projectName: "sentimentanalysis",
+    projectLink: "https://github.com/Ashishmehta786/Sentimentanalysis.git",
+    hosted: false,
+    users: 0,
+  },
 ];
 
 export default function App() {
@@ -56,23 +141,65 @@ export default function App() {
       setisloading(false);
     }, 700);
   }, []);
+
   return (
-    <main className="flex max-w-md max-auto flex-col px-5  min-h-screen">
+    <div className=" dark:bg-neutral-900 flex flex-col h-[100%] overflow-hidden  w-full">
       <Navbar />
-      <div className="p-4">
-        <h2 className="text-2xl font-bold mb-2">About Myself</h2>
-        <ul className="list-disc pl-5 space-y-2 ">
-          {listItems.map((item, index) => (
-            <ListItem key={index} text={item} isLoading={isloading} />
-          ))}
-        </ul>
-        <h2 className="text-2xl font-bold mb-2 mt-2">My skills</h2>
-        <ul className="list-disc pl-5 space-y-2">
-          {skillsArray.map((item, index) => (
-            <ListItem key={index} text={item} isLoading={isloading} />
-          ))}
-        </ul>
-      </div>
-    </main>
+      <main className="flex container max-w-xl py-5 flex-col px-5  dark:bg-neutral-900 container dark:text-neutral-100 min-h-screen text-neutral-800 mx-auto flex-col px-5">
+        <div className="p-4">
+          <Itemblock
+            text="text"
+            isloading={isloading}
+            heading="About Myself"
+            Headingicon={AudioLines}
+            array={aboutMe}
+          />
+          <div>
+            <h2 className="text-2xl font-bold my-4 flex gap-2   items-center">
+              <FolderOpenDot /> Projects
+            </h2>
+            <ProjectBlock isloading={isloading} />
+          </div>
+        </div>
+
+        <div className="mt-10 max-w-md mx-auto flex justify-center gap-4">
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src={gh}
+              className="w-8 h-8
+              dark:invert  transition-colors duration-200"
+              alt="GitHub"
+            />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src={linkedin}
+              className="w-8 h-8 hover:bg-gray-100
+              dark:hover:bg-gray-100 rounded-md transition-colors duration-200"
+              alt="LinkedIn"
+            />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src={x}
+              className="w-8 h-8 hover:bg-gray-100  dark:invert dark:hover:bg-gray-100 rounded-md transition-colors duration-200"
+              alt="Twitter"
+            />
+          </a>
+        </div>
+      </main>
+    </div>
   );
 }

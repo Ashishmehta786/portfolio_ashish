@@ -1,10 +1,9 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
 import gh from "./public/github.svg";
 import x from "./public/x.svg";
 import linkedin from "./public/linkedin.svg";
-import { useNavigate } from "react-router-dom";
 import {
   AudioLines,
   FolderOpenDot,
@@ -13,46 +12,72 @@ import {
 } from "lucide-react";
 
 const ProjectBlock = ({ isloading }: { isloading: boolean }) => {
+  const [showPreview, setpreview] = useState(false);
+  const [previewIndex, setpreviewIndex] = useState<Number | null>(null);
+  const getHtmlcss = (index: number) => {
+    if (index == 3) {
+      setpreview(false);
+    }
+    setpreviewIndex(index);
+    setpreview(!showPreview);
+  };
+  const leaveMouse = () => {
+    setpreview(false);
+  };
   return (
     <ul className="pl-5 space-y-2 flex flex-col justify-center">
       {projects.map((project, index) => {
         return (
-          <li
-            className={`relative group flex gap-2 items-center dark:text-neutral-300 text-neutral-700 transition-all duration-300 ease-in-out cursor-pointer ${
-              isloading
-                ? " blur pointer-events-none backdrop-blur-sm"
-                : "blur-none backdrop-blur-none opacity-100"
-            }`}
-          >
-            <span className="absolute -left-5 scale-[1.4] text-neutral-950 dark:text-neutral-300">
-              •
-            </span>
-            <a
-              href={project.projectLink}
-              className="flex gap-2"
-              target="_blank"
-            >
-              {" "}
-              <span>{project.projectName}</span>
-              <ArrowUpRight className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:cursor-pointer transition-all duration-300 ease-in-out" />
-            </a>
-
-            {!project.hosted && (
-              <div>
-                <img src={gh} className="w-5 h-5 ml-5 dark:invert" />
+          <div className="relative " key={index}>
+            {showPreview && index === previewIndex && (
+              <div className="absolute scale-[0.3] md:scale-[0.4] md:-translate-y-[75%] lg:scale-[0.55] top-1/2 left-1/2 -translate-x-1/2 -translate-y-[68%] lg:-translate-y-1/2 lg:-translate-x-[20%] ">
+                <iframe
+                  src={project.projectLink}
+                  width="1280px"
+                  height="800px"
+                  className="border-none   rounded"
+                ></iframe>
               </div>
             )}
-            {project.hosted && (
-              <>
-                <div className="w-2 ml-5 h-2 bg-green-500 rounded-full"></div>
-                {project.users > 0 && (
-                  <span className="text-neutral-500 dark:text-neutral-400">
-                    {project.users} users
-                  </span>
-                )}
-              </>
-            )}
-          </li>
+            <li
+              onMouseEnter={() => getHtmlcss(index)}
+              onMouseLeave={leaveMouse}
+              className={`relative group flex gap-2 items-center dark:text-neutral-300 text-neutral-700 w-[220px]  transition-all duration-300 ease-in-out cursor-pointer ${
+                isloading
+                  ? " blur pointer-events-none backdrop-blur-sm"
+                  : "blur-none backdrop-blur-none opacity-100"
+              }`}
+            >
+              <span className="absolute -left-5 scale-[1.4] text-neutral-950 dark:text-neutral-300">
+                •
+              </span>
+              <a
+                href={project.projectLink}
+                className="flex gap-2"
+                target="_blank"
+              >
+                {" "}
+                <span>{project.projectName}</span>
+                <ArrowUpRight className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:cursor-pointer transition-all duration-300 ease-in-out" />
+              </a>
+
+              {!project.hosted && (
+                <div>
+                  <img src={gh} className="w-5 h-5 ml-5 dark:invert" />
+                </div>
+              )}
+              {project.hosted && (
+                <>
+                  <div className="w-2 ml-5 h-2 bg-green-500 rounded-full"></div>
+                  {project.users > 0 && (
+                    <span className="text-neutral-500 dark:text-neutral-400">
+                      {project.users} users
+                    </span>
+                  )}
+                </>
+              )}
+            </li>
+          </div>
         );
       })}
     </ul>

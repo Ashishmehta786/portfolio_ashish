@@ -16,7 +16,7 @@ const CalendlyWidget = () => {
   return (
     <div className="flex justify-center relative   items-center mt-8">
       <div
-        className="absolute top-0 left-2 cursor-pointer w-16 md:w-40 bg-neutral-100 hover:bg-neutral-50 transition ease-in-out flex items-center justify-center rounded-md gap-2 py-2 px-2 text-neutral-600"
+        className="absolute top-0 left-2 cursor-pointer w-12 md:w-40 bg-neutral-50 hover:bg-white transition ease-in-out flex items-center justify-center rounded-md gap-2 py-2 px-2 text-neutral-600"
         onClick={() => window.history.back()}
       >
         <ArrowLeft />

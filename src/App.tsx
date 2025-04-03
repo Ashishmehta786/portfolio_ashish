@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import gh from "./public/github.svg";
 import x from "./public/x.svg";
@@ -10,6 +10,7 @@ import {
   LucideProps,
   ArrowUpRight,
 } from "lucide-react";
+import Skillscomponent from "./components/Skillscomponent";
 
 const ProjectBlock = ({ isloading }: { isloading: boolean }) => {
   const [showPreview, setpreview] = useState(false);
@@ -29,16 +30,18 @@ const ProjectBlock = ({ isloading }: { isloading: boolean }) => {
       {projects.map((project, index) => {
         return (
           <div className="relative " key={index}>
-            {showPreview && index === previewIndex && (
-              <div className="absolute scale-[0.3] md:scale-[0.4] md:-translate-y-[75%] lg:scale-[0.55] top-1/2 left-1/2 -translate-x-1/2 -translate-y-[68%] lg:-translate-y-1/2 lg:-translate-x-[20%] ">
-                <iframe
-                  src={project.projectLink}
-                  width="1280px"
-                  height="800px"
-                  className="border-none   rounded"
-                ></iframe>
-              </div>
-            )}
+            {showPreview &&
+              index === previewIndex &&
+              project.hosted == true && (
+                <div className="absolute scale-[0.3] md:scale-[0.4] md:-translate-y-[75%] lg:scale-[0.55] top-1/2 left-1/2 -translate-x-1/2 -translate-y-[68%] lg:-translate-y-1/2 lg:-translate-x-[20%] ">
+                  <iframe
+                    src={project.projectLink}
+                    width="1280px"
+                    height="800px"
+                    className="border-none   rounded"
+                  ></iframe>
+                </div>
+              )}
             <li
               onMouseEnter={() => getHtmlcss(index)}
               onMouseLeave={leaveMouse}
@@ -134,12 +137,14 @@ const ListItem = ({
 };
 
 const aboutMe = [
-  "My name is Ashish mehta studying currently in 3rd year of engineering",
-  "CS undergrad proficient in TypeScript, React,Next.js, Node.js and cloud platforms",
-  "Built real-time applications using MongoDB, Firebase and modern frameworks",
-  "Strong foundation in Python, C++ with machine learning experience",
-  "Open-source enthusiast with 160+ commits and full-stack projects",
+  "I'm Ashish Mehta, a 3rd-year CS undergrad passionate about scalable web apps.",
+  "Skilled in TypeScript, React, Next.js, Node.js, and cloud platforms, with full-stack experience.",
+  "Built real-time apps using MongoDB, Firebase, and modern frameworks for optimal UX.",
+  "Strong in Python, C++, and AI-driven solutions.",
+  "160+ open-source commits, collaborating to build impactful projects.",
+  "Open for freelance work—helping startups and  turn ideas into reality 🚀.",
 ];
+
 const projects = [
   {
     projectName: "Rag Project",
@@ -166,73 +171,84 @@ const projects = [
     users: 0,
   },
 ];
+export const Home = ({ isloading }: { isloading: boolean }) => {
+  return (
+    <main className="flex container max-w-xl py-1 flex-col px-5  dark:bg-neutral-900 container dark:text-neutral-100 min-h-screen text-neutral-800 mx-auto flex-col ">
+      <div className="p-4">
+        <Itemblock
+          text="text"
+          isloading={isloading}
+          heading="About Myself"
+          Headingicon={AudioLines}
+          array={aboutMe}
+        />
+        <div>
+          <h2 className="text-2xl font-bold my-4 flex gap-2   items-center">
+            <FolderOpenDot /> Projects
+          </h2>
+          <ProjectBlock isloading={isloading} />
+        </div>
+        <div className="md:hidden">
+          <Skillscomponent />
+        </div>
+      </div>
+
+      <div className="mt-1 mb-5 max-w-md mx-auto flex justify-center gap-4">
+        <a
+          href="https://github.com/Ashishmehta786"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src={gh}
+            className="w-8 h-8
+        dark:invert  transition-colors duration-200"
+            alt="GitHub"
+          />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/ashish-mehta-83a2bb279/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src={linkedin}
+            className="w-8 h-8 hover:bg-gray-100
+        dark:hover:bg-gray-100 rounded-md transition-colors duration-200"
+            alt="LinkedIn"
+          />
+        </a>
+        <a
+          href="https://x.com/AshishM95556974"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src={x}
+            className="w-8 h-8 hover:bg-gray-100  dark:invert dark:hover:bg-gray-100 rounded-md transition-colors duration-200"
+            alt="Twitter"
+          />
+        </a>
+      </div>
+    </main>
+  );
+};
 
 export default function App() {
   const [isloading, setisloading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
+      console.log("hello");
       setisloading(false);
     }, 700);
   }, []);
 
   return (
-    <div className=" dark:bg-neutral-900 flex flex-col h-[100%] overflow-hidden  w-full">
-      <Navbar />
-      <main className="flex container max-w-xl py-5 flex-col px-5  dark:bg-neutral-900 container dark:text-neutral-100 min-h-screen text-neutral-800 mx-auto flex-col px-5">
-        <div className="p-4">
-          <Itemblock
-            text="text"
-            isloading={isloading}
-            heading="About Myself"
-            Headingicon={AudioLines}
-            array={aboutMe}
-          />
-          <div>
-            <h2 className="text-2xl font-bold my-4 flex gap-2   items-center">
-              <FolderOpenDot /> Projects
-            </h2>
-            <ProjectBlock isloading={isloading} />
-          </div>
-        </div>
-
-        <div className="mt-10 max-w-md mx-auto flex justify-center gap-4">
-          <a
-            href="https://github.com/Ashishmehta786"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src={gh}
-              className="w-8 h-8
-              dark:invert  transition-colors duration-200"
-              alt="GitHub"
-            />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/ashish-mehta-83a2bb279/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src={linkedin}
-              className="w-8 h-8 hover:bg-gray-100
-              dark:hover:bg-gray-100 rounded-md transition-colors duration-200"
-              alt="LinkedIn"
-            />
-          </a>
-          <a
-            href="https://x.com/AshishM95556974"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src={x}
-              className="w-8 h-8 hover:bg-gray-100  dark:invert dark:hover:bg-gray-100 rounded-md transition-colors duration-200"
-              alt="Twitter"
-            />
-          </a>
-        </div>
-      </main>
+    <div className=" dark:bg-neutral-900 flex flex-col h-[100%] overflow-hidden  w-full relative">
+      <Navbar isloading={isloading} />
+      <aside className="lg:absolute lg:right-[2%]  lg:top-[5%] hidden xl:block flex ">
+        <Skillscomponent />
+      </aside>
     </div>
   );
 }

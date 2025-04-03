@@ -88,7 +88,7 @@ export default function Skillscomponent() {
       </span>
       <div className="relative overflow-hidden">
         <div
-          className={`grid grid-cols-2 gap-1 mt-2 transition-all duration-500 ease-in-out transform ${
+          className={`grid grid-cols-2 gap-y-3 gap-x-2 mt-2 transition-all duration-500 ease-in-out transform ${
             showskills
               ? "translate-y-0 max-h-[500px] opacity-100"
               : "-translate-y-full max-h-0  opacity-0"

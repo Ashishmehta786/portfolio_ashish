@@ -15,12 +15,12 @@ const CalendlyWidget = () => {
 
   return (
     <div className="flex justify-center relative   items-center mt-8">
-      <div className="absolute top-4 left-4 cursor-pointer w-16 md:w-40 bg-neutral-100 hover:bg-neutral-50 transition ease-in-out flex items-center justify-center rounded-md gap-2 py-2 px-2 text-neutral-600" onClick={() => window.history.back()}>
-      <ArrowLeft/>
-      <span className="font-semibold hidden md:block text-lg">
-
- Go back
-      </span>
+      <div
+        className="absolute top-0 left-2 cursor-pointer w-16 md:w-40 bg-neutral-100 hover:bg-neutral-50 transition ease-in-out flex items-center justify-center rounded-md gap-2 py-2 px-2 text-neutral-600"
+        onClick={() => window.history.back()}
+      >
+        <ArrowLeft />
+        <span className="font-semibold hidden md:block text-lg">Go back</span>
       </div>
       <div className=" rounded-lg bg-white p-4 w-full max-w-xl ">
         <h2 className="text-lg font-semibold text-center mb-3 text-gray-800 ">
